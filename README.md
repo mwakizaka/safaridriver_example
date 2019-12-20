@@ -16,6 +16,7 @@
         $ npm -v
         > 6.10.2
         ```
+2. `npm install`
 
 # Run test
 - `npm run test` or ` npm run test --spec test/specs/ios/example_selenium_jp.spec.js`
