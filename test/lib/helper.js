@@ -1,7 +1,7 @@
 import compareVersions from 'compare-versions';
 
 
-function setNativeValue(element, value) {
+function setNativeValueJs(element, value) {
   const { set: valueSetter } = Object.getOwnPropertyDescriptor(element, "value") || {};
   const prototype = Object.getPrototypeOf(element);
   const { set: prototypeValueSetter } = Object.getOwnPropertyDescriptor(prototype, "value") || {};
@@ -16,15 +16,15 @@ function setNativeValue(element, value) {
   element.dispatchEvent(new Event("input", { bubbles: true }));
 }
 
-function addSetNativeValueCommand(value) {
+function setNativeValueCommand(value) {
   if (driver.isIOS) {
-    browser.execute(setNativeValue, this, value);
+    browser.execute(setNativeValueJs, this, value);
   } else {
     this.setValue(value);
   }
 }
 
-function addClickForIOSSafari14Command(value) {
+function clickForIOS14SafariCommand(value) {
   if (driver.isIOS && compareVersions(driver.capabilities['safari:platformVersion'], '13.*') > 0) {
     browser.execute("arguments[0].click(); arguments[0].dispatchEvent(new Event('click', { bubbles: true }));", this);
   } else {
@@ -35,6 +35,6 @@ function addClickForIOSSafari14Command(value) {
 
 
 module.exports = {
-  addSetNativeValueCommand: addSetNativeValueCommand,
-  addClickForIOSSafari14Command: addClickForIOSSafari14Command
+  setNativeValueCommand: setNativeValueCommand,
+  clickForIOS14SafariCommand: clickForIOS14SafariCommand
 }
