@@ -12,9 +12,9 @@
     - In my case
         ```
         $ node -v
-        > v12.9.1
+        > v15.4.0
         $ npm -v
-        > 6.10.2
+        > 7.0.15
         ```
 2. `npm install`
 
