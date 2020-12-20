@@ -4,21 +4,20 @@ import helper from "../..//lib/helper"
 
 describe("example.selenium.jp/reserveApp", function () {
   before(function() {
-    browser.addCommand("setNativeValue", helper.customCommand, true);
+    browser.addCommand("setNativeValue", helper.addSetNativeValueCommand, true);
+    browser.addCommand("nativeClick", helper.addClickForIOSSafari14Command, true);
   });
 
-  it("Make a reservation at example.selenium.jp", function () {
+  it("Fail to make a reservation", function () {
     browser.url("http://example.selenium.jp/reserveApp/")
     
-    $("#reserve_year").setNativeValue("2020");
+    $("#reserve_year").setNativeValue("1987");
     $("#reserve_month").setNativeValue("01");
     $("#reserve_day").setNativeValue("08");
     $("#guestname").setNativeValue("mwakizaka");
-    $("#goto_next").click();
+    const gotoNext = $("#goto_next");
+    gotoNext.nativeClick();
 
-    assert($("#price").getText() == 8000);
-    $("#commit").click();
-
-    assert($("body.final_form > div.container > h1").getText() == "予約を完了しました。");
-  })
+    assert($("body.confirm_form > div.container > h1").getText() === "予約エラー");
+  });
 })
